@@ -27,3 +27,6 @@ for bam in $input_dir/*.bam; do
     $gtf_file \
     $out_dir/$sample
 done
+
+conda activate multiqc
+multiqc $qorts_dir -o $out_dir/multiqc_report

@@ -7,5 +7,7 @@
 #SBATCH --job-name=multiqc
 #SBATCH --mem=100G
 
+out_dir=/athena/angsd/scratch/kch4018/angsd_project/processed/qc/qorts
+
 conda activate multiqc
 multiqc $qorts_dir -o $out_dir/multiqc_report

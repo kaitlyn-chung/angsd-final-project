@@ -19,7 +19,7 @@ for bam in $input_dir/*.bam; do
     sample=$(basename "$bam" .bam)
     echo "Running QoRTs for sample: $sample"
     
-    java -jar $jar_file QC \
+    java -Xmx90G -jar $jar_file QC \
         --stranded \
         --generatePlots \
         $bam \

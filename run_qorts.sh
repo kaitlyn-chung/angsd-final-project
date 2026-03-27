@@ -20,9 +20,10 @@ for bam in $input_dir/*.bam; do
     echo "Running QoRTs for sample: $sample"
     
     java -Xmx90G -jar $jar_file QC \
-        --stranded \
-        --generatePlots \
-        $bam \
-        $gtf_file \
-        $out_dir/$sample
+    --numThreads 8 \
+    --stranded \
+    --generatePlots \
+    $bam \
+    $gtf_file \
+    $out_dir/$sample
 done

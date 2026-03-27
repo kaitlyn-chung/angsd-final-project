@@ -7,14 +7,14 @@
 #SBATCH --job-name=align_reads
 #SBATCH --mem=100G
 
-conda activate angsd
-
 STAR_Dir="/athena/angsd/scratch/kch4018/angsd_project/genome_index"
 
 DIRS=(
   "/athena/angsd/scratch/kch4018/angsd_project/pre_T"
   "/athena/angsd/scratch/kch4018/angsd_project/post_T"
 )
+
+conda activate angsd
 
 for dir in "${DIRS[@]}"; do
     for r1 in "$dir"/*_1_val_1.fq.gz; do

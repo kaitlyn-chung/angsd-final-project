@@ -7,14 +7,13 @@
 #SBATCH --job-name=genome_index
 #SBATCH --mem=50G
 
-conda activate angsd
-
 genome_index="/athena/angsd/scratch/kch4018/angsd_project/genome_index"
 fasta="$genome_index"/hg38.fa.gz
 gtf="$genome_index"/hg38.knownGene.gtf.gz
 fasta_unzipped="$genome_index"/hg38.fa
 gtf_unzipped="$genome_index"/hg38.knownGene.gtf
 
+conda activate angsd
 cd $genome_index
 
 echo "Preparing FASTA/GTF..."

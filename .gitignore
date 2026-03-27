@@ -1,0 +1,5 @@
+# Slurm output and error files
+slurm-*.out
+slurm-*.err
+*.out
+*.err

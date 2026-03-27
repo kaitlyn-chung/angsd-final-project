@@ -7,6 +7,8 @@
 #SBATCH --job-name=align_reads
 #SBATCH --mem=100G
 
+conda activate angsd
+
 STAR_Dir="/athena/angsd/scratch/kch4018/angsd_project/genome_index"
 
 DIRS=(

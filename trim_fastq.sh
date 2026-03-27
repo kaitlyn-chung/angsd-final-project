@@ -12,6 +12,8 @@ DIRS=(
   "/athena/angsd/scratch/kch4018/angsd_project/post_T"
 )
 
+conda activate trim-galore
+
 THREADS=${SLURM_CPUS_PER_TASK}
 
 for dir in "${DIRS[@]}"; do

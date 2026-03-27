@@ -7,6 +7,8 @@
 #SBATCH --job-name=make_index
 #SBATCH --mem=100G
 
+conda activate angsd
+
 for file in processed/*.bam; do
   samtools index $file
   echo "$file indexed"

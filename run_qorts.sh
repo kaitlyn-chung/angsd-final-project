@@ -8,14 +8,21 @@
 #SBATCH --mem=100G
 
 gtf_file=/athena/angsd/scratch/kch4018/angsd_project/genome_index/hg38.knownGene.gtf 
-out_dir=/athena/angsd/scratch/kch4018/angsd_project/processed/qc
-input_dir=/athena/cayuga_0019/scratch/kch4018/angsd_project/processed/*.bam
+out_dir=/athena/angsd/scratch/kch4018/angsd_project/processed/qc/qorts
+input_dir=/athena/cayuga_0019/scratch/kch4018/angsd_project/processed
 jar_file=/athena/angsd/scratch/mef3005/share/envs/qorts/share/qorts-1.3.6-1/QoRTs.jar
 
-conda activate qorts
-java -jar $jar_file \
-QC --stranded --generatePlots \
-$input_dir $gtf_file $out_dir
+mkdir -p $out_dir
 
-java -jar $jar_file generateSamplePlots $out_dir \
-    --makeSeparatePngs
+conda activate qorts
+for bam in $input_dir/*.bam; do
+    sample=$(basename "$bam" .bam)
+    echo "Running QoRTs for sample: $sample"
+    
+    java -jar $jar_file QC \
+        --stranded \
+        --generatePlots \
+        $bam \
+        $gtf_file \
+        $out_dir/$sample
+done

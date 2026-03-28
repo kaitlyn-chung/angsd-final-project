@@ -3,11 +3,12 @@
 #SBATCH --partition=angsd_class
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=1
 #SBATCH --job-name=multiqc
-#SBATCH --mem=100G
+#SBATCH --mem=8G
 
 out_dir=/athena/angsd/scratch/kch4018/angsd_project/processed/qc/qorts
 
 conda activate multiqc
-multiqc $qorts_dir -o $out_dir/multiqc_report
+
+multiqc "$out_dir" -o "$out_dir/multiqc_report"

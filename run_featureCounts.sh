@@ -3,20 +3,24 @@
 #SBATCH --partition=angsd_class
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=12
+#SBATCH --cpus-per-task=8
 #SBATCH --job-name=featureCounts
-#SBATCH --mem=100G
+#SBATCH --mem=40G
 
 gtf=/athena/angsd/scratch/kch4018/angsd_project/genome_index/hg38.refGene.gtf
-input_dir=/athena/cayuga_0019/scratch/kch4018/angsd_project/processed/*.bam
-output=/athena/cayuga_0019/scratch/kch4018/angsd_project/processed/feature_counts.txt
+bam_dir=/athena/cayuga_0019/scratch/kch4018/angsd_project/STAR_aligned/*.bam
+
+output=/athena/cayuga_0019/scratch/kch4018/angsd_project/feature_count/feature_counts.txt
+mkdir -p "$(dirname "$output")"
 
 conda activate angsd
 featureCounts \
     -p \
     -s 2 \
     --countReadPairs \
-    -T 12 \
+    -T 8 \
+    -t exon \
+    -g gene_id \
     -a $gtf \
     -o $output \
-    $input_dir
+    $bam_dir

@@ -9,7 +9,9 @@
 
 conda activate angsd
 
-for file in processed/*.bam; do
+aligned_dir="/athena/angsd/scratch/kch4018/angsd_project/STAR_aligned"
+
+for file in ${aligned_dir}/*.bam; do
   samtools index $file
   echo "$file indexed"
   done

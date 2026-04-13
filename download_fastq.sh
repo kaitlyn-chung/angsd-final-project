@@ -13,7 +13,7 @@ table="/athena/angsd/scratch/kch4018/angsd_project/SRP542825.txt"
 mkdir -p "$preT_dir" "$postT_dir"
 
 # for pre-treatment
-egrep _pre $table | cut -f 2 | egrep -o '[^;]+'  | xargs printf 'ftp://%s\n'| xargs wget --directory-prefix=$preT_dir
+egrep _pre $table | cut -f 2 | egrep -o '[^;]+'  | xargs -n 1 -P 8 printf 'ftp://%s\n'| xargs -n 1 -P 8 wget --directory-prefix=$preT_dir
 
 # for post-treatment
-egrep _onT $table | cut -f 2 | egrep -o '[^;]+'  | xargs printf 'ftp://%s\n'| xargs wget --directory-prefix=$postT_dir
+egrep _onT $table | cut -f 2 | egrep -o '[^;]+'  | xargs -n 1 -P 8 printf 'ftp://%s\n'| xargs -n 1 -P 8 wget --directory-prefix=$postT_dir

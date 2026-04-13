@@ -17,21 +17,3 @@ egrep _pre $table | cut -f 2 | egrep -o '[^;]+'  | xargs printf 'ftp://%s\n'| xa
 
 # for post-treatment
 egrep _onT $table | cut -f 2 | egrep -o '[^;]+'  | xargs printf 'ftp://%s\n'| xargs wget --directory-prefix=$postT_dir
-
-DIRS=($preT_dir $postT_dir)
-
-awk -F'\t' '{print $1, $3}' $table|
-while read -r srr label; do
-  for dir in "${DIRS[@]}"; do
-    for file in "${dir}"/*"${srr}"*; do
-      [[ -e "$file" ]] || continue
-
-      new="${file//$srr/$label}"
-
-      if [[ "$file" != "$new" ]]; then
-        echo "Renaming: $file → $new"
-        mv -- "$file" "$new"
-      fi
-    done
-  done
-done

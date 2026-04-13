@@ -3,24 +3,29 @@
 #SBATCH --partition=angsd_class
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --job-name=trim_fastq
-#SBATCH --mem=100G
-
-DIRS=(
-  "/athena/angsd/scratch/kch4018/angsd_project/pre_T"
-  "/athena/angsd/scratch/kch4018/angsd_project/post_T"
-)
+#SBATCH --array=1-16
+#SBATCH --cpus-per-task=4
+#SBATCH --job-name=trim
+#SBATCH --mem=30G
 
 conda activate trim-galore
 
+samples_list="/athena/angsd/scratch/kch4018/angsd_project/samples.txt"
+
 THREADS=${SLURM_CPUS_PER_TASK}
 
-for dir in "${DIRS[@]}"; do
-    for f in "$dir"/*_1.fastq.gz; do
-    echo "DIR: $dir"
-    basename=${f%_1.fastq.gz}
-    echo $basename
-    trim_galore --cores $THREADS -q 20 --paired "$basename"_1.fastq.gz "$basename"_2.fastq.gz --length 35 --retain_unpaired  --stringency 5 --fastqc --fastqc_args "--threads $THREADS" --output_dir "$dir"
-    done
-done
+SAMPLE=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $samples_list)
+
+prefix="${SAMPLE%_1.fastq.gz}"
+mate2="${prefix}_2.fastq.gz"
+
+outdir="$(dirname "$SAMPLE")/trimmed_qc"
+mkdir -p "$outdir"
+
+trim_galore --cores $THREADS \
+  -q 20 \
+  --paired "${prefix}_1.fastq.gz" "$mate2" \
+  --length 35 \
+  --retain_unpaired \
+  --stringency 5 \
+  --fastqc --fastqc_args "--threads 1" --output_dir "$outdir"

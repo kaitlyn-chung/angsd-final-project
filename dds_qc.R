@@ -9,8 +9,21 @@ as.dist(1 - corr_coeff) %>%
   plot(labels=colnames(.))
 
 colData(rlog_transformed)$sampleID <- sub("_.*", "", colnames(rlog_transformed))
-plotPCA(rlog_transformed, intgroup = "sampleID", ntop = 1000) +  labs(color = "Sample ID") +  theme_bw()
-plotPCA(rlog_transformed, intgroup = "condition", ntop = 1000) +  labs(color = "condition") +  theme_bw()
+plotPCA(rlog_transformed, 
+        intgroup = "sampleID", 
+        ntop = 1000) +  
+  labs(color = "sampleID") +  
+  theme_minimal() + 
+  ggtitle("PCA plot by patient") +
+  scale_color_manual(values = pnw_palette("Sailboat", 7, type = "continuous"))
+
+plotPCA(rlog_transformed, 
+        intgroup = "condition", 
+        ntop = 1000) +  
+  labs(color = "condition") +  
+  theme_minimal() + 
+  ggtitle("PCA plot by condition") +
+  scale_color_manual(values = pnw_palette("Sailboat", 2, type = "discrete"))
 
 mat <- assay(rlog_transformed)
 rv <- rowVars(mat)

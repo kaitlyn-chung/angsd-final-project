@@ -1,0 +1,24 @@
+h4 {
+  color: #a53860; /* Change H4 header color to a shade of dark pink */
+}
+h3 {
+  color: #450920; /* Change H3 header color to a shade of maroon */
+}
+h2 {
+  color: #a53860; /* Change H2 header color to a shade of dark pink */
+}
+h1 {
+  color: #da627d; /* Change H1 header color to a shade of pink */
+}
+a {
+  color: #a53860; /* Change links color */
+}
+a:visited {
+  color: #450920; /* Change visited links color */
+}
+a:hover {
+  color: #ffa5ab; /* Change hovered link color */
+}
+th {
+     color: #da627d; /* Change color of header on table */
+}

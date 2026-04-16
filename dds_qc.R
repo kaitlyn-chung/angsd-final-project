@@ -2,6 +2,7 @@ library(tidyverse)
 library(DESeq2)
 library(magrittr)
 library(pheatmap)
+library(PNWColors)
 
 # calculates correlation coefficient of samples with pearsons method
 corr_coeff <- cor(assay(rlog_transformed), method = "pearson")
@@ -24,7 +25,7 @@ plotPCA(rlog_transformed,
   labs(color = "sampleID") +  
   theme_minimal() + 
   ggtitle("PCA plot by patient") +
-  scale_color_manual(values = pnw_palette("Sailboat", 7, type = "continuous"))
+  scale_color_manual(values = pnw_palette("Sailboat", 8, type = "continuous"))
 
 # plot PCA, colored by condition
 plotPCA(rlog_transformed, 

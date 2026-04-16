@@ -44,3 +44,7 @@ dds_nav <- estimateSizeFactors(dds_nav)
 counts_normalized <- counts(dds_nav, normalized=TRUE)
 assay(dds_nav, "log_norm_counts") <- log2(counts_normalized + 1)
 rlog_transformed <- rlog(dds_nav, blind=FALSE)
+
+# save important deseq objects
+saveRDS(dds_nav, "dds_nav.rds")
+saveRDS(rlog_transformed, "rlog_transformed.rds")

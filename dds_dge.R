@@ -6,6 +6,8 @@ library(org.Hs.eg.db)
 library(clusterProfiler)
 library(enrichplot)
 
+dds_nav <- readRDS("dds_nav.rds")
+
 # DE analysis - normalization across sequencing depth, dispersion estimation, fit binomial GLM and Wald stats
 dds_nav %<>% DESeq()
 
@@ -94,8 +96,4 @@ dotplot(gse, showCategory=10, split=".sign", label_format=NULL) +
 # split by ontology
 dotplot(gse, showCategory=10, split="ONTOLOGY", label_format=NULL) + 
   facet_grid(ONTOLOGY ~ ., scales = "free_y") + 
-  theme(axis.text.y = element_text(size = 10))
-
-bp_only <- filter(gse, ONTOLOGY == "BP")
-dotplot(bp_only, showCategory=10, label_format=NULL) + 
   theme(axis.text.y = element_text(size = 10))

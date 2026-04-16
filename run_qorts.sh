@@ -1,12 +1,14 @@
 #! /bin/bash -l
 
 #SBATCH --partition=angsd_class
-#SBATCH --array=0-13
+#SBATCH --array=0-16
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 #SBATCH --job-name=qorts
 #SBATCH --mem=32G
+
+conda activate qorts
 
 gtf_file=/athena/angsd/scratch/kch4018/angsd_project/genome_index/hg38.refGene.gtf
 out_dir=/athena/angsd/scratch/kch4018/angsd_project/STAR_aligned/qorts_qc

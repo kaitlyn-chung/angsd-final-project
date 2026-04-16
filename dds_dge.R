@@ -97,3 +97,6 @@ dotplot(gse, showCategory=10, split=".sign", label_format=NULL) +
 dotplot(gse, showCategory=10, split="ONTOLOGY", label_format=NULL) + 
   facet_grid(ONTOLOGY ~ ., scales = "free_y") + 
   theme(axis.text.y = element_text(size = 10))
+
+saveRDS(df_results, file = "df_results.rds")
+saveRDS(rlog_dge, file = "rlog_dge.rds")

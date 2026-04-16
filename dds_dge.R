@@ -25,7 +25,7 @@ p53_status <- rlog_transformed[c("TP53","MDM2","IDH1","IDH2"),] %>% assay
 View(p53_status)
 
 # heatmap but with initial clustering
-pheatmap(rlog_dge,scale="row",show_rownames = FALSE)
+pheatmap(rlog_dge,scale="row",show_rownames = TRUE, fontsize_row = 6)
 
 # heatmap but put on and pre treatment next to each other for each patient
 sample_info <- data.frame(
@@ -48,6 +48,7 @@ vp1 <- EnhancedVolcano(df_results, lab=rownames(df_results), x='log2FoldChange',
 df_results_shrunk <- lfcShrink(dds_nav, coef=2, type="apeglm")
 vp2 <- EnhancedVolcano(df_results_shrunk, lab=rownames(df_results_shrunk), x='log2FoldChange', y='padj', pCutoff=0.05)
 vp1 + vp2
+vp2
 
 # GO term enrichment
 hg38 <- org.Hs.eg.db # bioconductor 
@@ -65,7 +66,13 @@ res_go <- enrichGO(gene=genes_dge,
 gene_list <- df_results$log2FoldChange # extract log2fold change from statistically sig genes
 names(gene_list) <- rownames(df_results) # assign genes to row indexes
 gene_list <- sort(gene_list, decreasing = TRUE)
-head(gene_list) # top genes
+
+res_go[1,] %>% str
+
+dotplot(res_go, showCategory = 20) +  
+  ggtitle("Top enriched GO terms") +  
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 50)) +
+  theme(axis.text.y = element_text(size = 10))
 
 # look at gene sets
 gse <- gseGO(geneList=gene_list,
@@ -80,10 +87,15 @@ gse <- gseGO(geneList=gene_list,
 
 # all ontologies
 dotplot(gse, showCategory=10, split=".sign", label_format=NULL) + 
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 50)) +
   facet_grid(.~.sign) + 
   theme(axis.text.y = element_text(size = 10)) 
 
 # split by ontology
 dotplot(gse, showCategory=10, split="ONTOLOGY", label_format=NULL) + 
   facet_grid(ONTOLOGY ~ ., scales = "free_y") + 
+  theme(axis.text.y = element_text(size = 10))
+
+bp_only <- filter(gse, ONTOLOGY == "BP")
+dotplot(bp_only, showCategory=10, label_format=NULL) + 
   theme(axis.text.y = element_text(size = 10))

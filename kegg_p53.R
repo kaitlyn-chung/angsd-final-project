@@ -53,6 +53,7 @@ p53_genes_in_data  # the single gene identified
 
 df_results["CDKN1A",] # find p-value
 
+# plot significance across samples
 par(mfrow=c(1,3))
 plotCounts(dds_nav,gene=which.min(df_results$padj), main="MMP9 \nMost significant")
 plotCounts(dds_nav,gene = p53_genes_in_data, normalized=TRUE)
@@ -61,5 +62,5 @@ plotCounts(dds_nav,gene=which.max(df_results$padj), main="RAC3 \nLeast significa
 par(mfrow=c(1,2))
 plotCounts(dds_nav,gene = "TP53", normalized=TRUE)
 plotCounts(dds_nav,gene = "MDM2", normalized=TRUE)
-df_results["MDM2",] # find p-value
-df_results["TP53",] # find p-value
+df_results["MDM2",] 
+df_results["TP53",] 
